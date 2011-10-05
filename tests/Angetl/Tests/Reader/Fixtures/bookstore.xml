@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<bookstore>
+    <book>
+        <title lang="eng" pages="832">Harry Potter</title>
+        <price>29.99</price>
+    </book>
+    <book>
+        <title lang="fra">Leçons de XML</title>
+        <price>39.95</price>
+    </book>
+</bookstore>
