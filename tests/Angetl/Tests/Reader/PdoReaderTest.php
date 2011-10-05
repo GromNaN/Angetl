@@ -2,13 +2,13 @@
 
 namespace Angetl\Tests\Reader;
 
-use Angetl\Reader\XmlReader;
+use Angetl\Reader\PdoReader;
 
-class XmlReaderTest extends \PHPUnit_Framework_TestCase
+class PdoReaderTest extends \PHPUnit_Framework_TestCase
 {
     public function testRead()
     {
-        $reader = $this->getXmlReader();
+        $reader = $this->getPdoReader();
 
         $expected = array(
             0 => array(
@@ -35,23 +35,15 @@ class XmlReaderTest extends \PHPUnit_Framework_TestCase
         $reader->close();
     }
 
-    public function testAddField()
+    protected function getPdoReader()
     {
-        $reader = $this->getXmlReader();
-
-        $fieldNames = array('title', 'language', 'price');
-
-        $this->assertEquals($fieldNames, $reader->getFieldNames(), 'Get field names');
-    }
-
-    protected function getXmlReader()
-    {
-        $reader = new XmlReader(__DIR__.'/Fixtures/bookstore.xml');
+        $pdo = new \PDO(sprintf('sqlite:%s/Fixtures/bookstore.sqlite', __DIR__));
+        $stmt = $pdo->prepare('SELECT * FROM bookstore');
+        $reader = new PdoReader($stmt);
         $reader
-          ->setRecordXpath('//book')
-          ->addField('title', 'string(./title/text())')
-          ->addField('language', 'string(./title/@lang)')
-          ->addField('price', 'string(./price/text())')
+            ->addField('title', 0)
+            ->addField('language', 1)
+            ->addField('price', 2)
         ;
 
         return $reader;

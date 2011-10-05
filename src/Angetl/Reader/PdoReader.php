@@ -4,66 +4,54 @@ namespace Angetl\Reader;
 
 use Angetl\AbstractReader;
 
-class XmlReader extends AbstractReader
+class PdoReader extends AbstractReader
 {
     protected $fields;
-    protected $recordXpath;
-    protected $filename;
-    protected $nodes;
-    protected $currentRecordId;
 
     /**
-     * @var \DOMXpath
+     * @var \PDOStatement
      */
-    protected $xpath;
+    protected $stmt;
 
-    public function __construct($filename)
+    public function __construct($stmt = null)
     {
         parent::__construct();
         $this->fields = array();
-        $this->filename = realpath($filename);
+        $this->stmt = $stmt;
     }
 
-    public function addField($fieldName, $xpath)
+    /**
+     *
+     * @param type $fieldName
+     */
+    public function addField($fieldName, $key)
     {
         $this->fieldNames[] = $fieldName;
-        $this->fields[$fieldName] = $xpath;
-
-        return $this;
-    }
-
-    public function setRecordXpath($xpath)
-    {
-        $this->recordXpath = $xpath;
+        $this->fields[$fieldName] = $key;
 
         return $this;
     }
 
     protected function _open()
     {
-        $document = new \DOMDocument();
-        $document->load($this->filename);
-
-        $this->xpath = new \DOMXPath($document);
-        $this->nodes = $this->xpath->query($this->recordXpath);
-        $this->currentRecordId = 0;
-    }
-
-    protected function _close()
-    {
-        unset($this->nodes, $this->xpath);
+        $this->stmt->execute();
     }
 
     protected function _read()
     {
-        if ($node = $this->nodes->item($this->currentRecordId++)) {
-            foreach ($this->fields as $fieldName => $xpath) {
-                $this->currentRecord[$fieldName] = $this->xpath->evaluate($xpath, $node);
+        if ($row = $this->stmt->fetch(\PDO::FETCH_BOTH)) {
+            foreach ($this->fields as $fieldName => $key) {
+                $this->currentRecord[$fieldName] = isset($row[$key]) ? $row[$key] : null;
             }
 
             return true;
         }
 
         return false;
+    }
+
+    protected function _close()
+    {
+        unset($this->stmt);
     }
 }
