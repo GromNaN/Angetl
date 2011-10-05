@@ -8,5 +8,6 @@ $loader = new UniversalClassLoader();
 $loader->registerNamespaces(array(
     'Angetl\\Tests'   => __DIR__.'/tests',
     'Angetl'          => __DIR__.'/src',
+    'Symfony'         => __DIR__.'/vendor',
 ));
 $loader->register();

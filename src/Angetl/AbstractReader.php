@@ -15,7 +15,7 @@ abstract class AbstractReader
     {
         $this->fieldNames = array();
     }
-    
+
     /**
      * Open reader
      *
@@ -49,7 +49,7 @@ abstract class AbstractReader
     /**
      * Read next record
      *
-     * @return 
+     * @return
      * @throw \LogicException When not opened
      * @api
      */
