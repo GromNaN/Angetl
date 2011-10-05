@@ -4,8 +4,19 @@ namespace Angetl;
 
 abstract class AbstractReader
 {
-    protected $fieldNames;
+    /**
+     * @var array Fields definition
+     */
+    protected $fields;
+
+    /**
+     * @var array Current record
+     */
     protected $currentRecord = null;
+
+    /**
+     * @var bool Is the reader opened
+     */
     protected $opened = false;
 
     /**
@@ -13,7 +24,27 @@ abstract class AbstractReader
      */
     public function __construct()
     {
-        $this->fieldNames = array();
+        $this->fields = array();
+    }
+
+    /**
+     * @param string $fieldName Field name
+     * @param mixed $field Field definition
+     * @return AbstractReader
+     */
+    public function addField($fieldName, $field)
+    {
+        $this->fields[$fieldName] = $field;
+
+        return $this;
+    }
+
+    /**
+     * @return array Field names
+     */
+    public function getFieldNames()
+    {
+        return array_keys($this->fields);
     }
 
     /**
@@ -27,21 +58,6 @@ abstract class AbstractReader
         $this->_assertNotOpened();
         $this->_open();
         $this->opened = true;
-
-        return $this;
-    }
-
-    /**
-     * Close reader
-     *
-     * @throw \LogicException When not opened
-     * @api
-     */
-    public function close()
-    {
-        $this->_assertOpened();
-        $this->_close();
-        $this->opened = false;
 
         return $this;
     }
@@ -65,6 +81,21 @@ abstract class AbstractReader
         }
     }
 
+    /**
+     * Close reader
+     *
+     * @throw \LogicException When not opened
+     * @api
+     */
+    public function close()
+    {
+        $this->_assertOpened();
+        $this->_close();
+        $this->opened = false;
+
+        return $this;
+    }
+
     abstract protected function _read();
 
     abstract protected function _close();
@@ -76,7 +107,7 @@ abstract class AbstractReader
      */
     protected function _newRecord()
     {
-        $this->currentRecord = array_fill_keys($this->fieldNames, null);
+        $this->currentRecord = array_fill_keys($this->getFieldNames(), null);
     }
 
     /**
@@ -85,14 +116,6 @@ abstract class AbstractReader
     public function getCurrentRecord()
     {
         return $this->currentRecord;
-    }
-
-    /**
-     * @return array Field names
-     */
-    public function getFieldNames()
-    {
-        return $this->fieldNames;
     }
 
     /**

@@ -6,8 +6,6 @@ use Angetl\AbstractReader;
 
 class PdoReader extends AbstractReader
 {
-    protected $fields;
-
     /**
      * @var \PDOStatement
      */
@@ -18,18 +16,6 @@ class PdoReader extends AbstractReader
         parent::__construct();
         $this->fields = array();
         $this->stmt = $stmt;
-    }
-
-    /**
-     *
-     * @param type $fieldName
-     */
-    public function addField($fieldName, $key)
-    {
-        $this->fieldNames[] = $fieldName;
-        $this->fields[$fieldName] = $key;
-
-        return $this;
     }
 
     protected function _open()

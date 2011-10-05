@@ -6,7 +6,6 @@ use Angetl\AbstractReader;
 
 class XmlReader extends AbstractReader
 {
-    protected $fields;
     protected $recordXpath;
     protected $filename;
     protected $nodes;
@@ -22,14 +21,6 @@ class XmlReader extends AbstractReader
         parent::__construct();
         $this->fields = array();
         $this->filename = realpath($filename);
-    }
-
-    public function addField($fieldName, $xpath)
-    {
-        $this->fieldNames[] = $fieldName;
-        $this->fields[$fieldName] = $xpath;
-
-        return $this;
     }
 
     public function setRecordXpath($xpath)
