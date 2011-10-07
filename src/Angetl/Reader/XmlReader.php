@@ -2,8 +2,6 @@
 
 namespace Angetl\Reader;
 
-use Angetl\AbstractReader;
-
 class XmlReader extends AbstractReader
 {
     protected $recordXpath;

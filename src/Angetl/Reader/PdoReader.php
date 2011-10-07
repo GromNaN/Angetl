@@ -2,8 +2,6 @@
 
 namespace Angetl\Reader;
 
-use Angetl\AbstractReader;
-
 class PdoReader extends AbstractReader
 {
     /**

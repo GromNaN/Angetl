@@ -1,8 +1,8 @@
 <?php
 
-namespace Angetl;
+namespace Angetl\Reader;
 
-abstract class AbstractReader
+abstract class AbstractReader implements Reader
 {
     /**
      * @var array Fields definition
@@ -32,7 +32,7 @@ abstract class AbstractReader
      * @param mixed $field Field definition
      * @return AbstractReader
      */
-    public function addField($fieldName, $field)
+    public function addField($fieldName, $field = null)
     {
         $this->fields[$fieldName] = $field;
 
