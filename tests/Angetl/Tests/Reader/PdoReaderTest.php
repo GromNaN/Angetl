@@ -6,6 +6,8 @@ use Angetl\Reader\PdoReader;
 
 class PdoReaderTest extends ReaderTest
 {
+    protected $class = 'PdoReader';
+
     /**
      * @return \Angetl\Reader\PdoReader
      */

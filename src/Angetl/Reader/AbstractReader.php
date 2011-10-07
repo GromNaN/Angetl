@@ -2,6 +2,8 @@
 
 namespace Angetl\Reader;
 
+use Angetl\Record;
+
 abstract class AbstractReader implements Reader
 {
     /**
@@ -65,7 +67,7 @@ abstract class AbstractReader implements Reader
     /**
      * Read next record
      *
-     * @return
+     * @return Record
      * @throw \LogicException When not opened
      * @api
      */
@@ -107,11 +109,11 @@ abstract class AbstractReader implements Reader
      */
     protected function _newRecord()
     {
-        $this->currentRecord = array_fill_keys($this->getFieldNames(), null);
+        $this->currentRecord = new Record($this->getFieldNames());
     }
 
     /**
-     * @return array Current record
+     * @return Record Current record
      */
     public function getCurrentRecord()
     {

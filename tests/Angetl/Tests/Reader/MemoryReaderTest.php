@@ -6,6 +6,8 @@ use Angetl\Reader\MemoryReader;
 
 class MemoryReaderTest extends ReaderTest
 {
+    protected $class = 'MemoryReader';
+
     /**
      * @return \Angetl\Reader\MemoryReader
      */

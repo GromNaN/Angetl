@@ -6,6 +6,8 @@ use Angetl\Reader\XmlReader;
 
 class XmlReaderTest extends ReaderTest
 {
+    protected $class = 'XmlReader';
+
     public function testAddField()
     {
         $reader = $this->getReader();

@@ -6,6 +6,8 @@ use Angetl\Reader\PdoReader;
 
 abstract class ReaderTest extends \PHPUnit_Framework_TestCase
 {
+    protected $class = '';
+
     public function testRead()
     {
         $reader = $this->getReader();
@@ -14,7 +16,8 @@ abstract class ReaderTest extends \PHPUnit_Framework_TestCase
 
         foreach ($this->getExpectedRecords() as $i => $expect) {
             $record = $reader->read();
-            $this->assertEquals($expect, $record, 'Record '.$i.' is read');
+            $this->assertInstanceOf('Angetl\Record', $record, $this->class.'::read() returns a Record object');
+            $this->assertEquals($expect, $record->getValues(), $this->class.'::read() Record '.$i.' is read');
         }
 
         $this->assertNull($reader->read(), 'End of file');

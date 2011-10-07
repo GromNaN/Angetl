@@ -3,6 +3,7 @@
 namespace Angetl\Reader;
 
 use ArrayIterator;
+use Angetl\Record;
 
 class MemoryReader extends AbstractReader
 {
@@ -35,7 +36,7 @@ class MemoryReader extends AbstractReader
     protected function _read()
     {
         if ($this->recordList->valid()) {
-            $this->currentRecord = $this->recordList->current();
+            $this->currentRecord = $this->_createRecord($this->recordList->current());
             $this->recordList->next();
 
             return true;
@@ -47,5 +48,25 @@ class MemoryReader extends AbstractReader
     protected function _close()
     {
         // Nothing to do
+    }
+
+    /**
+     * @param mixed $values
+     * @return Record
+     */
+    protected function _createRecord($values)
+    {
+        if ($values instanceof Record) {
+            return $values;
+        }
+
+        if (is_array($values)) {
+            $record = new Record(array_keys($values));
+            $record->setValues($values);
+
+            return $record;
+        }
+
+        throw new \Exception('Invalid record type from type: '.gettype($values));
     }
 }
