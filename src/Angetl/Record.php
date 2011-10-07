@@ -7,15 +7,20 @@ class Record implements \ArrayAccess
     protected $values;
     protected $errors;
 
-    public function __construct(array $fieldNames)
+    public function __construct(array $fieldNames, $values = null)
     {
         $this->values = array_fill_keys($fieldNames, null);
         $this->errors = array();
+        if ($values) {
+            $this->setValues($values);
+        }
     }
 
     public function setValues($values)
     {
         $this->values = array_merge($this->values, $values);
+
+        return $this;
     }
     public function getValues()
     {
@@ -49,5 +54,7 @@ class Record implements \ArrayAccess
     public function addError($errorMessage)
     {
         $this->errors[] = $errorMessage;
+
+        return $this;
     }
 }

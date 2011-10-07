@@ -51,22 +51,19 @@ class MemoryReader extends AbstractReader
     }
 
     /**
-     * @param mixed $values
+     * @param mixed $data
      * @return Record
      */
-    protected function _createRecord($values)
+    protected function _createRecord($data)
     {
-        if ($values instanceof Record) {
-            return $values;
+        if ($data instanceof Record) {
+            return $data;
         }
 
-        if (is_array($values)) {
-            $record = new Record(array_keys($values));
-            $record->setValues($values);
-
-            return $record;
+        if (is_array($data)) {
+            return new Record(array_keys($data), $data);
         }
 
-        throw new \Exception('Invalid record type from type: '.gettype($values));
+        throw new \Exception('Invalid record type from type: '.gettype($data));
     }
 }
