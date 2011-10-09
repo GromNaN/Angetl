@@ -16,6 +16,16 @@ class Record implements \ArrayAccess
         }
     }
 
+    public static function create(array $fieldNames, $values = null)
+    {
+        return new self($fieldNames, $values);
+    }
+
+    public static function createFromValues(array $values)
+    {
+        return new self(array_keys($values), $values);
+    }
+
     public function setValues($values)
     {
         $this->values = array_merge($this->values, $values);
