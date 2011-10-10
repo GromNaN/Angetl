@@ -42,9 +42,11 @@ class ValidationFilter implements Filter
     {
         $violations = $this->validator->validateValue($record->getValues(), $this->constraint);
 
-        if (empty($violations)) {
+        if (0 === count($violations)) {
             return;
         }
+
+        $record->flag(Record::FLAG_INVALID);
 
         foreach ($violations as $violation) {
             $record->addMessage(

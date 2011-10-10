@@ -101,10 +101,19 @@ class Processor implements \Iterator
             if ($this->filter) {
                 $this->filter->filter($record);
             }
-            if (!$record->isDeleted()) {
+            if (!$record->is(Record::FLAG_DELETED)) {
                 $this->writer->write($record);
             }
+
+            return $record;
         }
+
+        return $this->currentRecord = false;
+    }
+
+    public function valid()
+    {
+        return false !== $this->currentRecord;
     }
 
     /**

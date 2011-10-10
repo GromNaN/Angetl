@@ -15,7 +15,7 @@ class ValidationFilterTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataForFilterTest
      */
-    public function testFilter($values, $nbMessages)
+    public function testFilter($values, $nbMessages, $invalid)
     {
         $filter = $this->getFilter();
         $filter->setConstraint(new C\Collection(array(
@@ -28,6 +28,7 @@ class ValidationFilterTest extends \PHPUnit_Framework_TestCase
         $filter->filter($record);
 
         $this->assertEquals(count($record->getMessages()), $nbMessages);
+        $this->assertEquals($record->getFlag(Record::FLAG_INVALID, false), $invalid);
     }
 
     public function dataForFilterTest()
@@ -38,7 +39,8 @@ class ValidationFilterTest extends \PHPUnit_Framework_TestCase
                     'email' => 'test@email.com',
                     'url' => 'http://foo.bar/',
                 ),
-                0
+                0,
+                false,
             ),
             array(
                 array(
@@ -46,12 +48,14 @@ class ValidationFilterTest extends \PHPUnit_Framework_TestCase
                     'url' => 'test@email.com',
                 ),
                 2,
+                true,
             ),
             array(
                 array(
                     'email' => 'test@email.com',
                 ),
                 1,
+                true,
             ),
         );
     }

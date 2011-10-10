@@ -36,7 +36,7 @@ class UniqueFilter
         $hash = $this->getHash($record->getValues());
 
         if ($key = array_search($hash, $this->hashes)) {
-            $record->delete();
+            $record->setFlag(Record::FLAG_DELETED);
             $record->addMessage('Duplicate of {{ key }}', array('{{ key }}' => $key));
         }
 

@@ -4,29 +4,21 @@ namespace Angetl;
 
 class Record implements \ArrayAccess
 {
+    const FLAG_DELETED = 'deleted';
+    const FLAG_INVALID = 'invalid';
 
     protected $values;
     protected $messages;
-    protected $deleted;
+    protected $flags;
 
     public function __construct($values = null)
     {
         $this->values = array();
+        $this->flags = array();
         $this->messages = array();
         if ($values) {
             $this->setValues($values);
         }
-        $this->deleted = false;
-    }
-
-    public static function create(array $fieldNames, $values = null)
-    {
-        return new self($fieldNames, $values);
-    }
-
-    public static function createFromValues(array $values)
-    {
-        return new self(array_keys($values), $values);
     }
 
     public function setValues($values)
@@ -73,9 +65,7 @@ class Record implements \ArrayAccess
 
     /**
      * @param string $message Message template
-     * @param mixed  $param1
-     * @param mixed  $param2
-     * @param mixed  $param3
+     * @param array  $params  Message parameters
      * @return Record
      */
     public function addMessage($template, $params = array())
@@ -83,14 +73,30 @@ class Record implements \ArrayAccess
         $this->messages[] = array('template' => $template, 'params' => $params);
     }
 
-    public function delete()
+    /**
+     * Set flag value.
+     *
+     * @param string $name Flag name
+     * @param mixed $value Flag value
+     * @return Record
+     */
+    public function flag($name, $value = true)
     {
-        $this->deleted = true;
+        $this->flags[$name] = $value;
+
+        return $this;
     }
 
-    public function isDeleted()
+    /**
+     * Get flag value.
+     *
+     * @param string $name Flag name
+     * @param mixed $default Flag value by default if not set
+     * @return mixed Flag value
+     */
+    public function is($name, $default = false)
     {
-        return $this->deleted;
+        return array_key_exists($name, $this->flags) ? $this->flags[$name] : $default;
     }
 
 }
