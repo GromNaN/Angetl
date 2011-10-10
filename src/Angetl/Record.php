@@ -4,14 +4,15 @@ namespace Angetl;
 
 class Record implements \ArrayAccess
 {
+
     protected $values;
-    protected $errors;
+    protected $messages;
     protected $deleted;
 
     public function __construct($values = null)
     {
         $this->values = array();
-        $this->errors = array();
+        $this->messages = array();
         if ($values) {
             $this->setValues($values);
         }
@@ -34,47 +35,62 @@ class Record implements \ArrayAccess
 
         return $this;
     }
+
     public function getValues()
     {
         return $this->values;
     }
+
     public function offsetExists($key)
     {
         return array_key_exists($key, $this->values);
     }
+
     public function offsetGet($key)
     {
         return $this->values[$key];
     }
+
     public function offsetSet($key, $value)
     {
         $this->values[$key] = $value;
     }
+
     public function offsetUnset($key)
     {
         unset($this->values[$key]);
     }
 
-    public function isValid()
+    public function hasMessages()
     {
-        return empty($this->errors);
+        return 0 !== count($this->messages);
     }
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-    public function addError($errorMessage)
-    {
-        $this->errors[] = $errorMessage;
 
-        return $this;
+    public function getMessages()
+    {
+        return $this->messages;
     }
+
+    /**
+     * @param string $message Message template
+     * @param mixed  $param1
+     * @param mixed  $param2
+     * @param mixed  $param3
+     * @return Record
+     */
+    public function addMessage($template, $params = array())
+    {
+        $this->messages[] = array('template' => $template, 'params' => $params);
+    }
+
     public function delete()
     {
         $this->deleted = true;
     }
+
     public function isDeleted()
     {
         return $this->deleted;
     }
+
 }
