@@ -2,32 +2,40 @@
 
 namespace Angetl\Reader;
 
-use ArrayIterator;
+use Angetl\Record;
 
-class MemoryWriter extends AbstractWriter
+class MemoryWriter implements Writer
 {
-    /**
-     * @var ArrayIterator
-     */
-    protected $recordList;
 
-    public function getRecordList()
+    /**
+     * @var array
+     */
+    protected $records;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->records = array();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function write(Record $record)
+    {
+        $this->records[] = $record;
+    }
+
+    /**
+     * Get written records.
+     *
+     * @return array<Record>
+     */
+    public function getRecords()
     {
         return $this->recordList;
     }
 
-    protected function _open()
-    {
-        $this->recordList = new ArrayIterator(array());
-    }
-
-    protected function _write($record)
-    {
-        $this->recordList->append($record);
-    }
-
-    protected function _close()
-    {
-        // Nothing to do
-    }
 }

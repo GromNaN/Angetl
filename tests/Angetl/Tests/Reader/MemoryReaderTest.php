@@ -14,11 +14,6 @@ class MemoryReaderTest extends ReaderTest
     protected function getReader()
     {
         $reader = new MemoryReader($this->getExpectedRecords());
-        $reader
-            ->addField('title')
-            ->addField('language')
-            ->addField('price')
-        ;
 
         return $reader;
     }

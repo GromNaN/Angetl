@@ -6,14 +6,16 @@ class Record implements \ArrayAccess
 {
     protected $values;
     protected $errors;
+    protected $deleted;
 
-    public function __construct(array $fieldNames, $values = null)
+    public function __construct($values = null)
     {
-        $this->values = array_fill_keys($fieldNames, null);
+        $this->values = array();
         $this->errors = array();
         if ($values) {
             $this->setValues($values);
         }
+        $this->deleted = false;
     }
 
     public static function create(array $fieldNames, $values = null)
@@ -66,5 +68,13 @@ class Record implements \ArrayAccess
         $this->errors[] = $errorMessage;
 
         return $this;
+    }
+    public function delete()
+    {
+        $this->deleted = true;
+    }
+    public function isDeleted()
+    {
+        return $this->deleted;
     }
 }

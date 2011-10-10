@@ -12,17 +12,13 @@ abstract class ReaderTest extends \PHPUnit_Framework_TestCase
     {
         $reader = $this->getReader();
 
-        $reader->open();
-
         foreach ($this->getExpectedRecords() as $i => $expect) {
             $record = $reader->read();
             $this->assertInstanceOf('Angetl\Record', $record, $this->class.'::read() returns a Record object');
             $this->assertEquals($expect, $record->getValues(), $this->class.'::read() Record '.$i.' is read');
         }
 
-        $this->assertNull($reader->read(), 'End of file');
-
-        $reader->close();
+        $this->assertFalse($reader->read(), 'End of file');
     }
 
     /**

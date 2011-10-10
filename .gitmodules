@@ -4,3 +4,6 @@
 [submodule "vendor/Symfony/Component/Finder"]
 	path = vendor/Symfony/Component/Finder
 	url = git://github.com/symfony/Finder.git
+[submodule "vendor/Symfony/Component/Validator"]
+	path = vendor/Symfony/Component/Validator
+	url = git://github.com/symfony/Validator.git

@@ -5,7 +5,7 @@ namespace Angetl\Reader;
 use ArrayIterator;
 use Angetl\Record;
 
-class MemoryReader extends AbstractReader
+class MemoryReader implements Reader
 {
     /**
      * @var Iterator
@@ -26,44 +26,39 @@ class MemoryReader extends AbstractReader
         } else {
             throw new \InvalidArgumentException('Invalid record list. MemoryReader accepts array, IteratorAggregate and Iterator.');
         }
-    }
 
-    protected function _open()
-    {
         $this->recordList->rewind();
     }
 
-    protected function _read()
+    /**
+     * {@inheritDoc}
+     */
+    public function read()
     {
         if ($this->recordList->valid()) {
-            $this->currentRecord = $this->_createRecord($this->recordList->current());
+            $record = $this->createRecord($this->recordList->current());
             $this->recordList->next();
 
-            return true;
+            return $record;
         }
 
         return false;
-    }
-
-    protected function _close()
-    {
-        // Nothing to do
     }
 
     /**
      * @param mixed $data
      * @return Record
      */
-    protected function _createRecord($data)
+    protected function createRecord($data)
     {
         if ($data instanceof Record) {
             return $data;
         }
 
         if (is_array($data)) {
-            return new Record(array_keys($data), $data);
+            return new Record($data);
         }
 
-        throw new \Exception('Invalid record type from type: '.gettype($data));
+        throw new \Exception('Invalid record data type: '.gettype($data));
     }
 }

@@ -15,6 +15,7 @@ class PdoReaderTest extends ReaderTest
     {
         $pdo = new \PDO(sprintf('sqlite:%s/Fixtures/bookstore.sqlite', __DIR__));
         $stmt = $pdo->prepare('SELECT * FROM bookstore');
+        $stmt->execute();
         $reader = new PdoReader($stmt);
         $reader
             ->addField('title', 0)

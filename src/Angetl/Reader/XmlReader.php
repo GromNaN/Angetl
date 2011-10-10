@@ -2,25 +2,31 @@
 
 namespace Angetl\Reader;
 
+use Angetl\Record;
+
 class XmlReader extends AbstractReader
 {
-    protected $recordXpath;
-    protected $filename;
-    protected $nodes;
-    protected $currentRecordId;
 
+    protected $recordXpath = '//';
+    protected $nodes;
+    protected $currentNodeId = 0;
     /**
      * @var \DOMXpath
      */
     protected $xpath;
 
-    public function __construct($filename)
+    public function __construct(\DOMDocument $document)
     {
         parent::__construct();
-        $this->fields = array();
-        $this->filename = realpath($filename);
+        $this->xpath = new \DOMXPath($document);
     }
 
+    /**
+     * Set the main xpath expression to split record nodes.
+     *
+     * @param string $xpath
+     * @return XmlReader
+     */
     public function setRecordXpath($xpath)
     {
         $this->recordXpath = $xpath;
@@ -28,31 +34,25 @@ class XmlReader extends AbstractReader
         return $this;
     }
 
-    protected function _open()
+    /**
+     * {@inheritDoc}
+     */
+    public function read()
     {
-        $document = new \DOMDocument();
-        $document->load($this->filename);
+        if (null === $this->nodes) {
+            $this->nodes = $this->xpath->query($this->recordXpath);
+        }
 
-        $this->xpath = new \DOMXPath($document);
-        $this->nodes = $this->xpath->query($this->recordXpath);
-        $this->currentRecordId = 0;
-    }
-
-    protected function _close()
-    {
-        unset($this->nodes, $this->xpath);
-    }
-
-    protected function _read()
-    {
-        if ($node = $this->nodes->item($this->currentRecordId++)) {
+        if ($node = $this->nodes->item($this->currentNodeId++)) {
+            $record = new Record();
             foreach ($this->fields as $fieldName => $xpath) {
-                $this->currentRecord[$fieldName] = $this->xpath->evaluate($xpath, $node);
+                $record[$fieldName] = $this->xpath->evaluate($xpath, $node);
             }
 
-            return true;
+            return $record;
         }
 
         return false;
     }
+
 }

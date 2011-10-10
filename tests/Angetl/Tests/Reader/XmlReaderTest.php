@@ -22,7 +22,9 @@ class XmlReaderTest extends ReaderTest
      */
     protected function getReader()
     {
-        $reader = new XmlReader(__DIR__.'/Fixtures/bookstore.xml');
+        $doc = new \DOMDocument();
+        $doc->load(__DIR__.'/Fixtures/bookstore.xml');
+        $reader = new XmlReader($doc);
         $reader
           ->setRecordXpath('//book')
           ->addField('title', 'string(./title/text())')

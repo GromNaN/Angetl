@@ -1,16 +1,16 @@
 <?php
 
-namespace Angetl\Transformer;
+namespace Angetl\Filter;
 
 use Angetl\Record;
 
 /**
  * Mapping options can be a field name, a lambda function or a closure.
  */
-class MapTransformer implements Transformer
+class MapFilter implements Filter
 {
     protected $mapping;
-    
+
     /**
      * Constructor.
      *
@@ -24,19 +24,7 @@ class MapTransformer implements Transformer
     /**
      * {@inheritDoc}
      */
-    public function transform(array $recordList)
-    {
-        foreach ($recordList as $record) {
-            $this->transformRecord($record);
-        }
-    }
-
-    /**
-     * Tranform one record.
-     *
-     * @param Record $record 
-     */
-    protected function transformRecord(Record $record)
+    public function filter(Record $record)
     {
         foreach ($this->mapping as $fieldName => $map) {
             if (is_callable($map)) {

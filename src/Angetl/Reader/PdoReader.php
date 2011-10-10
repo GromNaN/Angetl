@@ -2,40 +2,51 @@
 
 namespace Angetl\Reader;
 
+use Angetl\Record;
+
 class PdoReader extends AbstractReader
 {
+
     /**
      * @var \PDOStatement
      */
     protected $stmt;
+    /**
+     * @var int Fetch mode \PDO::FETCH_*
+     */
+    protected $fetch;
 
-    public function __construct($stmt = null)
+    /**
+     * @param \PDOStatement $stmt Executed statement
+     * @param int $fetchMode Fetch mode \PDO::FETCH_*
+     */
+    public function __construct($stmt, $fetchMode = \PDO::FETCH_BOTH)
     {
         parent::__construct();
-        $this->fields = array();
         $this->stmt = $stmt;
+        $this->fetchMode = $fetchMode;
     }
 
-    protected function _open()
+    /**
+     * {@inheritDoc}
+     */
+    public function read()
     {
-        $this->stmt->execute();
-    }
+        if ($row = $this->stmt->fetch($this->fetchMode)) {
+            $record = new Record();
 
-    protected function _read()
-    {
-        if ($row = $this->stmt->fetch(\PDO::FETCH_BOTH)) {
-            foreach ($this->fields as $fieldName => $key) {
-                $this->currentRecord[$fieldName] = isset($row[$key]) ? $row[$key] : null;
+            if ($this->fields) {
+                foreach ($this->fields as $fieldName => $key) {
+                    $record[$fieldName] = isset($row[$key]) ? $row[$key] : null;
+                }
+            } else {
+                $record->setValues($row);
             }
 
-            return true;
+            return $record;
         }
 
         return false;
     }
 
-    protected function _close()
-    {
-        unset($this->stmt);
-    }
 }
