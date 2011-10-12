@@ -3,6 +3,7 @@
 namespace Angetl;
 
 use Angetl\Reader\Reader;
+use Angetl\Filter\Filter;
 use Angetl\Writer\Writer;
 use Angetl\Record;
 
@@ -12,7 +13,7 @@ class Processor implements \Iterator
     /**
      * @var int Incremental key
      */
-    private $key = 0;
+    private $key;
     /**
      * @var Record Last processed record.
      */
@@ -121,7 +122,8 @@ class Processor implements \Iterator
      */
     public function rewind()
     {
-        throw new \LogicException('Angetl processor cannot be rewind.');
+        $this->key = 0;
+        $this->next();
     }
 
 }

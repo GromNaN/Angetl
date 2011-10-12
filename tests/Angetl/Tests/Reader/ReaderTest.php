@@ -2,16 +2,17 @@
 
 namespace Angetl\Tests\Reader;
 
-use Angetl\Reader\PdoReader;
+use Angetl\Reader\Reader as ReaderInterface;
 
 abstract class ReaderTest extends \PHPUnit_Framework_TestCase
 {
     protected $class = '';
 
-    public function testRead()
+    /**
+     * @dataProvider dataForTestRead
+     */
+    public function testRead($reader)
     {
-        $reader = $this->getReader();
-
         foreach ($this->getExpectedRecords() as $i => $expect) {
             $record = $reader->read();
             $this->assertInstanceOf('Angetl\Record', $record, $this->class.'::read() returns a Record object');
@@ -21,10 +22,7 @@ abstract class ReaderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($reader->read(), 'End of file');
     }
 
-    /**
-     * @return \Angetl\Reader\AbstractReader
-     */
-    abstract protected function getReader();
+    abstract public function dataForTestRead();
 
     /**
      * @return array

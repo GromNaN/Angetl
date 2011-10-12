@@ -28,7 +28,7 @@ class ValidationFilterTest extends \PHPUnit_Framework_TestCase
         $filter->filter($record);
 
         $this->assertEquals(count($record->getMessages()), $nbMessages);
-        $this->assertEquals($record->getFlag(Record::FLAG_INVALID, false), $invalid);
+        $this->assertEquals($record->is(Record::FLAG_INVALID), $invalid);
     }
 
     public function dataForFilterTest()

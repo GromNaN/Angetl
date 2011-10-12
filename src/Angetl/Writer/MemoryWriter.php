@@ -1,6 +1,6 @@
 <?php
 
-namespace Angetl\Reader;
+namespace Angetl\Writer;
 
 use Angetl\Record;
 
