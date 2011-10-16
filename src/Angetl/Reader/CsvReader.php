@@ -14,12 +14,12 @@ use Angetl\Utils\Encoding;
 class CsvReader extends AbstractReader
 {
 
-    protected static $defaultOptions = array(
+    static protected $defaultOptions = array(
         'skip' => 0, // Number of lines to skip
         'names_first' => true, // The first line contains field names
         'delimiter' => null, // Delimiter. If null, il will be detected
         'encoding' => null, // Encoding. If null, il will be detected
-        'length' => 2000, // Max line length
+        'length' => 4096, // Max line length
         'enclosure' => '"', // CSV enclosure
         'delimiters' => array(',', ';', "\t", '|'),
     );
@@ -64,6 +64,7 @@ class CsvReader extends AbstractReader
             if ($this->firstLine && empty($this->fields)) {
                 $this->fields = array_flip($values);
                 $this->firstLine = false;
+
                 return $this->read();
             }
 

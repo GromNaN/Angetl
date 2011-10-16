@@ -15,6 +15,7 @@ class CsvFileReaderTest extends ReaderTest
         $reader2 = new CsvFileReader(__DIR__.'/Fixtures/bookstore2.csv', array(
             'delimiter' => ':',
             'names_first' => false,
+            'skip' => 4,
         ));
         $reader2->addField('title', 2);
         $reader2->addField('language', 0);
