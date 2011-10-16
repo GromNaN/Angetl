@@ -17,9 +17,4 @@ class MemoryReaderTest extends ReaderTest
 
         return $reader;
     }
-
-    public function dataForTestRead()
-    {
-        return array(array($this->getReader()));
-    }
 }

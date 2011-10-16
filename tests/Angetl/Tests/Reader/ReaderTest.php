@@ -20,9 +20,13 @@ abstract class ReaderTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertFalse($reader->read(), 'End of file');
+        $this->assertFalse($reader->read(), 'End of file');
     }
 
-    abstract public function dataForTestRead();
+    public function dataForTestRead()
+    {
+        return array(array($this->getReader()));
+    }
 
     /**
      * @return array
