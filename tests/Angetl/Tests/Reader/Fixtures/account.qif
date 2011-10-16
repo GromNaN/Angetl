@@ -1,0 +1,22 @@
+!Type:Bank
+D6/9'2006
+T0.00
+CX
+POpening Balance
+L[Direct West Oil]
+^
+D7/9'2006
+CX
+T0.00
+XT0.00
+POpening Balance
+LXfer from Delet
+^
+D6/9'2006
+
+T-376,725,870.00
+PTD CanadaTrust DWOG
+LIssue to ???
+LIssue to bearer
+^
+
