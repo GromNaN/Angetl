@@ -2,32 +2,57 @@
 
 namespace Angetl\Tests\Reader;
 
-use Angetl\Reader\PdoReader;
+use Angetl\Reader\QifReader;
 
-class PdoReaderTest extends ReaderTest
+class QifReaderTest extends ReaderTest
 {
-    protected $class = 'PdoReader';
+    protected $class = 'QifReader';
 
     /**
-     * @return \Angetl\Reader\PdoReader
+     * @return \Angetl\Reader\QifReader
      */
     protected function getReader()
     {
-        $pdo = new \PDO(sprintf('sqlite:%s/Fixtures/bookstore.sqlite', __DIR__));
-        $stmt = $pdo->prepare('SELECT * FROM bookstore');
-        $stmt->execute();
-        $reader = new PdoReader($stmt);
-        $reader
-            ->addField('title', 0)
-            ->addField('language', 1)
-            ->addField('price', 2)
-        ;
+        $handle = fopen(__DIR__.'/Fixtures/account.qif', 'r');
+        $reader = new QifReader($handle);
 
         return $reader;
     }
 
-    public function dataForTestRead()
+    protected function getExpectedRecords()
     {
-        return array(array($this->getReader()));
+        return array(
+            array(
+                '!' => 'Type:Bank',
+                'D' => '6/9\'2006',
+                'T' => '0.00',
+                'C' => 'X',
+                'P' => 'Opening Balance',
+                'L' => '[Direct West Oil]',
+            ),
+            array(
+                'D' => '7/9\'2006',
+                'C' => 'X',
+                'T' => '0.00',
+                'XT' => '0.00',
+                'P' => 'Opening Balance',
+                'L' => 'Xfer from Delet',
+            ),
+            array(
+                'D' => '6/9\'2006',
+                'T' => '-376,725,870.00',
+                'P' => 'TD CanadaTrust DWOG',
+                'L' => 'Issue to bearer',
+            ),
+        );
+    }
+
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testConstructWithInvalidResource()
+    {
+        new QifReader(123);
     }
 }
