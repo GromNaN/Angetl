@@ -32,14 +32,6 @@ class Processor implements \Iterator
     private $filter;
 
     /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->filters = array();
-    }
-
-    /**
      * @param Reader $reader
      * @return Processor
      */
