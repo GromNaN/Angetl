@@ -28,11 +28,13 @@ class MapFilter implements Filter
     {
         foreach ($this->mapping as $fieldName => $map) {
             if (is_callable($map)) {
-                $record[$fieldName] = call_user_func($map, $record);
+                $record[$fieldName] = $map($record);
                 continue;
             }
 
-            $record[$fieldName] = $record[$map];
+            if ((is_numeric($map) || is_string($map)) && isset($record[$map])) {
+                $record[$fieldName] = $record[$map];
+            }
         }
     }
 }

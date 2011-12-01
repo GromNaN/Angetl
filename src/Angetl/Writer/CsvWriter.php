@@ -14,7 +14,7 @@ class CsvWriter implements Writer
     protected $options;
 
     /**
-     * @var resource Fiel handle
+     * @var resource File handle
      */
     protected $handle;
 

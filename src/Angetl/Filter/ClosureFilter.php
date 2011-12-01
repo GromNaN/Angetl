@@ -5,20 +5,21 @@ namespace Angetl\Filter;
 use Angetl\Record;
 
 /**
- * Mapping options can be a field name, a lambda function or a closure.
+ *
  */
-class MapFilter implements Filter
+class ClosureFilter implements Filter
 {
-    protected $mapping;
 
-    /**
-     * Constructor.
-     *
-     * @param array $mapping
-     */
-    public function __construct(array $mapping)
+    protected $closures;
+
+    public function __construct(array $closures = array())
     {
-        $this->mapping = $mapping;
+        $this->closures = $closures;
+    }
+
+    public function setClosure($fieldName, $closure)
+    {
+        $this->closures[$fieldName] = $closure;
     }
 
     /**
@@ -26,13 +27,9 @@ class MapFilter implements Filter
      */
     public function filter(Record $record)
     {
-        foreach ($this->mapping as $fieldName => $map) {
-            if (is_callable($map)) {
-                $record[$fieldName] = call_user_func($map, $record);
-                continue;
-            }
-
-            $record[$fieldName] = $record[$map];
+        foreach ($this->closures as $fieldName => $closure) {
+            $record[$fieldName] = $closure($record[$fieldName]);
         }
     }
+
 }
