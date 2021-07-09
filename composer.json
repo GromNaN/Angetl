@@ -1,0 +1,43 @@
+{
+    "name": "gromnan/angetl",
+    "description": "ETL",
+    "keywords": ["etl", "csv", "qif", "rss"],
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Angetl\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Angetl\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jérôme TAMARELLE",
+            "email": "jerome@tamarelle.net"
+        }
+    ],
+    "require": {
+        "php": ">= 7.4",
+        "symfony/validator": "^4.4",
+        "symfony/finder": "^4.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "phpstan": "tools/phpstan/vendor/bin/phpstan",
+        "phpcs": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run",
+        "phpcs-fix": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix",
+        "rector": "tools/phpstan/vendor/bin/rector process"
+    }
+}
