@@ -4,8 +4,9 @@ namespace Angetl\Tests\Filter;
 
 use Angetl\Record;
 use Angetl\Filter\MapFilter;
+use PHPUnit\Framework\TestCase;
 
-class MapFilterTest extends \PHPUnit_Framework_TestCase
+class MapFilterTest extends TestCase
 {
 
     /**

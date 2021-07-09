@@ -6,7 +6,7 @@ use Angetl\Reader\QifReader;
 
 class QifReaderTest extends ReaderTest
 {
-    protected $class = 'QifReader';
+    protected $class = QifReader::class;
 
     /**
      * @return \Angetl\Reader\QifReader
@@ -47,12 +47,9 @@ class QifReaderTest extends ReaderTest
         );
     }
 
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testConstructWithInvalidResource()
     {
+        $this->expectException(\InvalidArgumentException::class);
         new QifReader(123);
     }
 }

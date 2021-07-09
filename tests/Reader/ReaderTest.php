@@ -2,9 +2,10 @@
 
 namespace Angetl\Tests\Reader;
 
-use Angetl\Reader\Reader as ReaderInterface;
+use Angetl\Record;
+use PHPUnit\Framework\TestCase;
 
-abstract class ReaderTest extends \PHPUnit_Framework_TestCase
+abstract class ReaderTest extends TestCase
 {
     protected $class = '';
 
@@ -15,7 +16,7 @@ abstract class ReaderTest extends \PHPUnit_Framework_TestCase
     {
         foreach ($this->getExpectedRecords() as $i => $expect) {
             $record = $reader->read();
-            $this->assertInstanceOf('Angetl\Record', $record, $this->class.'::read() returns a Record object');
+            $this->assertInstanceOf(Record::class, $record, $this->class.'::read() returns a Record object');
             $this->assertEquals($expect, $record->getValues(), $this->class.'::read() Record '.$i.' is read');
         }
 

@@ -1,4 +1,3 @@
-nbproject
-autoload.php
-ignore
-
+/.phpunit.result.cache
+/composer.lock
+/vendor/

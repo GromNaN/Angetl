@@ -6,8 +6,9 @@ use Angetl\Processor;
 use Angetl\Reader\MemoryReader;
 use Angetl\Filter\MapFilter;
 use Angetl\Writer\NullWriter;
+use PHPUnit\Framework\TestCase;
 
-class ProcessorTest extends \PHPUnit_Framework_TestCase
+class ProcessorTest extends TestCase
 {
     public function testIterator()
     {

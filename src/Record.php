@@ -53,14 +53,24 @@ class Record implements \ArrayAccess
         unset($this->values[$key]);
     }
 
-    public function hasMessages()
+    public function hasMessages(): bool
     {
         return 0 !== count($this->messages);
     }
 
-    public function getMessages()
+    public function getMessages(): array
     {
         return $this->messages;
+    }
+
+    public function getFormattedMessages(): array
+    {
+        $messages = [];
+        foreach ($this->messages as $message) {
+            $messages[] = strtr($message['template'], $message['params']);
+        }
+
+        return $messages;
     }
 
     /**

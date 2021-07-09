@@ -3,16 +3,19 @@
 namespace Angetl\Filter;
 
 use Angetl\Record;
+use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * Symfony2 validation.
+ * Symfony validation.
  */
 class ValidationFilter implements Filter
 {
     /**
-     * @var Validator
+     * @var ValidatorInterface
      */
     protected $validator;
 
@@ -21,11 +24,9 @@ class ValidationFilter implements Filter
      */
     protected $constraint;
 
-    public function setValidator(Validator $validator)
+    public function __construct(ValidatorInterface $validator = null)
     {
-        $this->validator = $validator;
-
-        return $this;
+        $this->validator = $validator ?? Validation::createValidator();
     }
 
     public function setConstraint(Constraint $constraint)
@@ -40,18 +41,19 @@ class ValidationFilter implements Filter
      */
     public function filter(Record $record)
     {
-        $violations = $this->validator->validateValue($record->getValues(), $this->constraint);
+        $violations = $this->validator->validate($record->getValues(), $this->constraint);
 
-        if (0 === count($violations)) {
+        if (0 === $violations->count()) {
             return;
         }
 
         $record->flag(Record::FLAG_INVALID);
 
+        /** @var ConstraintViolationInterface $violation */
         foreach ($violations as $violation) {
             $record->addMessage(
                 '{{ property }} ' . $violation->getMessageTemplate(),
-                $violation->getMessageParameters() + array('{{ property }}' => $violation->getPropertyPath())
+                $violation->getParameters() + array('{{ property }}' => $violation->getPropertyPath())
             );
         }
     }

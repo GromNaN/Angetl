@@ -6,7 +6,6 @@ use Angetl\Record;
 
 class PdoReader extends AbstractReader
 {
-
     /**
      * @var \PDOStatement
      */

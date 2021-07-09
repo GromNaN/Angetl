@@ -4,8 +4,9 @@ namespace Angetl\Tests\Writer;
 
 use Angetl\Writer\CsvWriter;
 use Angetl\Record;
+use PHPUnit\Framework\TestCase;
 
-class CsvWriterTest extends \PHPUnit_Framework_TestCase
+class CsvWriterTest extends TestCase
 {
 
     public function testWriteHeader()
@@ -61,8 +62,6 @@ class CsvWriterTest extends \PHPUnit_Framework_TestCase
      */
     protected function getWriter()
     {
-
-
         return $writer;
     }
 }

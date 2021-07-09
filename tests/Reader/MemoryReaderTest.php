@@ -6,7 +6,7 @@ use Angetl\Reader\MemoryReader;
 
 class MemoryReaderTest extends ReaderTest
 {
-    protected $class = 'MemoryReader';
+    protected $class = MemoryReader::class;
 
     /**
      * @return \Angetl\Reader\MemoryReader

@@ -1,0 +1,30 @@
+{
+    "name": "gromnan/angetl",
+    "description": "ETL",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Angetl\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Angetl\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jérôme TAMARELLE",
+            "email": "jerome@tamarelle.net"
+        }
+    ],
+    "require": {
+        "php": ">= 7.4",
+        "symfony/validator": "^4.4",
+        "symfony/finder": "^4.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}

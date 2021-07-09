@@ -6,7 +6,7 @@ use Angetl\Reader\XmlReader;
 
 class XmlReaderTest extends ReaderTest
 {
-    protected $class = 'XmlReader';
+    protected $class = XmlReader::class;
 
     public function testAddField()
     {

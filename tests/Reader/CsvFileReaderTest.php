@@ -6,7 +6,7 @@ use Angetl\Reader\CsvFileReader;
 
 class CsvFileReaderTest extends ReaderTest
 {
-    protected $class = 'CsvFileReader';
+    protected $class = CsvFileReader::class;
 
     public function dataForTestRead()
     {
@@ -27,11 +27,9 @@ class CsvFileReaderTest extends ReaderTest
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testConstructWithInvalidFilename()
     {
+        $this->expectException(\InvalidArgumentException::class);
         new CsvFileReader(__DIR__.'/invalid');
     }
 }

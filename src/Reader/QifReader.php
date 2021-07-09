@@ -52,7 +52,7 @@ class QifReader implements Reader
                     continue;
                 }
 
-                $code = strtoupper($line{0});
+                $code = strtoupper($line[0]);
 
                 // Each record is ended with a ^ (caret)
                 if ('^' === $code) {
@@ -61,7 +61,7 @@ class QifReader implements Reader
 
                 // X: Extended data for Quicken Business. Followed by a second character subcode
                 if ('X' === $code && strlen($line) > 1) {
-                    $code .= strtoupper($line{1});
+                    $code .= strtoupper($line[1]);
                 }
 
                 $record[$code] = substr($line, strlen($code));
