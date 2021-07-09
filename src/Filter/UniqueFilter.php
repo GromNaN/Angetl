@@ -25,7 +25,7 @@ class UniqueFilter
     /**
      * @var array hashed footprint of records already filtered
      */
-    private $hashes;
+    private array $hashes = [];
     /**
      * @var array list of field names to check unicity
      */
@@ -36,7 +36,7 @@ class UniqueFilter
         $this->uniqueFieldNames = $uniqueFieldNames ? array_flip($uniqueFieldNames) : false;
     }
 
-    public function filter(Record $record)
+    public function filter(Record $record): void
     {
         $hash = $this->getHash($record->getValues());
 
@@ -53,7 +53,7 @@ class UniqueFilter
      *
      * @param array $values
      */
-    protected function getHash($values)
+    protected function getHash($values): string
     {
         if ($this->uniqueFieldNames) {
             $values = array_intersect_key($values, $this->uniqueFieldNames);

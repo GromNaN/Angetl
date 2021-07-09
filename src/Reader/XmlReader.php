@@ -15,17 +15,13 @@ use Angetl\Record;
 
 class XmlReader extends AbstractReader
 {
-    protected $recordXpath = '//';
+    protected string $recordXpath = '//';
     protected $nodes;
-    protected $currentNodeId = 0;
-    /**
-     * @var \DOMXpath
-     */
-    protected $xpath;
+    protected int $currentNodeId = 0;
+    protected \DOMXPath $xpath;
 
     public function __construct(\DOMDocument $document)
     {
-        parent::__construct();
         $this->xpath = new \DOMXPath($document);
     }
 
@@ -43,10 +39,7 @@ class XmlReader extends AbstractReader
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function read()
+    public function read(): ?Record
     {
         if (null === $this->nodes) {
             $this->nodes = $this->xpath->query($this->recordXpath);
@@ -61,6 +54,6 @@ class XmlReader extends AbstractReader
             return $record;
         }
 
-        return false;
+        return null;
     }
 }

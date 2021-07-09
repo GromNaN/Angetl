@@ -11,13 +11,12 @@ declare(strict_types=1);
 
 namespace Angetl\Tests\Reader;
 
+use Angetl\Reader\Reader;
 use Angetl\Record;
 use PHPUnit\Framework\TestCase;
 
 abstract class ReaderTest extends TestCase
 {
-    protected $class = '';
-
     /**
      * @dataProvider dataForTestRead
      */
@@ -25,17 +24,22 @@ abstract class ReaderTest extends TestCase
     {
         foreach ($this->getExpectedRecords() as $i => $expect) {
             $record = $reader->read();
-            $this->assertInstanceOf(Record::class, $record, $this->class.'::read() returns a Record object');
-            $this->assertEquals($expect, $record->getValues(), $this->class.'::read() Record '.$i.' is read');
+            $this->assertInstanceOf(Record::class, $record, get_class($reader).'::read() returns a Record object');
+            $this->assertEquals($expect, $record->getValues(), get_class($reader).'::read() Record '.$i.' is read');
         }
 
-        $this->assertFalse($reader->read(), 'End of file');
-        $this->assertFalse($reader->read(), 'End of file');
+        $this->assertNull($reader->read(), 'End of file');
+        $this->assertNull($reader->read(), 'End of file');
     }
 
     public function dataForTestRead()
     {
         return [[$this->getReader()]];
+    }
+
+    protected function getReader(): Reader
+    {
+        throw new \LogicException('Not implemented');
     }
 
     /**

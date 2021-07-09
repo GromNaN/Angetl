@@ -17,8 +17,6 @@ interface Reader
 {
     /**
      * Read the next record.
-     *
-     * return Record|bool The record read. false is returned at the end.
      */
-    public function read();
+    public function read(): ?Record;
 }

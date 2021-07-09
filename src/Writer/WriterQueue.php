@@ -16,14 +16,11 @@ use SplQueue;
 
 class WriterQueue implements Writer
 {
-    /**
-     * @var Writer
-     */
-    private $writer;
+    private \Angetl\Writer\Writer $writer;
     /**
      * @var SplQueue Record queue
      */
-    private $queue;
+    private \SplQueue $queue;
 
     public function __construct(Writer $writer)
     {
@@ -44,7 +41,7 @@ class WriterQueue implements Writer
     /**
      * {@inheritDoc}
      */
-    public function write(Record $record)
+    public function write(Record $record): void
     {
         $this->queue->enqueue($record);
     }

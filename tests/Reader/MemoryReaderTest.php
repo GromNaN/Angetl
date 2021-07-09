@@ -12,15 +12,11 @@ declare(strict_types=1);
 namespace Angetl\Tests\Reader;
 
 use Angetl\Reader\MemoryReader;
+use Angetl\Reader\Reader;
 
 class MemoryReaderTest extends ReaderTest
 {
-    protected $class = MemoryReader::class;
-
-    /**
-     * @return \Angetl\Reader\MemoryReader
-     */
-    protected function getReader()
+    protected function getReader(): MemoryReader
     {
         $reader = new MemoryReader($this->getExpectedRecords());
 

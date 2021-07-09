@@ -15,23 +15,14 @@ use Angetl\Record;
 
 class MemoryWriter implements Writer
 {
-    /**
-     * @var array
-     */
-    protected $records;
+    protected array $records;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->records = [];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function write(Record $record)
+    public function write(Record $record): void
     {
         $this->records[] = $record;
     }
@@ -39,10 +30,10 @@ class MemoryWriter implements Writer
     /**
      * Get written records.
      *
-     * @return array<Record>
+     * @return Record[]
      */
-    public function getRecords()
+    public function getRecords(): array
     {
-        return $this->recordList;
+        return $this->records;
     }
 }

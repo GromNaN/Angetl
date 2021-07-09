@@ -15,12 +15,7 @@ use Angetl\Reader\QifReader;
 
 class QifReaderTest extends ReaderTest
 {
-    protected $class = QifReader::class;
-
-    /**
-     * @return \Angetl\Reader\QifReader
-     */
-    protected function getReader()
+    protected function getReader(): QifReader
     {
         $handle = fopen(__DIR__.'/Fixtures/account.qif', 'r');
         $reader = new QifReader($handle);

@@ -64,12 +64,4 @@ class CsvWriterTest extends TestCase
 
         $this->assertEquals('"Harry Potter"::29.99', $writtenLine);
     }
-
-    /**
-     * return CsvWriter
-     */
-    protected function getWriter()
-    {
-        return $writer;
-    }
 }

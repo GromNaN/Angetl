@@ -15,30 +15,24 @@ use Angetl\Record;
 
 class PdoReader extends AbstractReader
 {
+    protected \PDOStatement $stmt;
+
     /**
-     * @var \PDOStatement
+     * @var Fetch mode \PDO::FETCH_*
      */
-    protected $stmt;
-    /**
-     * @var int Fetch mode \PDO::FETCH_*
-     */
-    protected $fetch;
+    protected int $fetchMode;
 
     /**
      * @param \PDOStatement $stmt Executed statement
      * @param int $fetchMode Fetch mode \PDO::FETCH_*
      */
-    public function __construct($stmt, $fetchMode = \PDO::FETCH_BOTH)
+    public function __construct($stmt, int $fetchMode = \PDO::FETCH_BOTH)
     {
-        parent::__construct();
         $this->stmt = $stmt;
         $this->fetchMode = $fetchMode;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function read()
+    public function read(): ?Record
     {
         if ($row = $this->stmt->fetch($this->fetchMode)) {
             $record = new Record();
@@ -54,6 +48,6 @@ class PdoReader extends AbstractReader
             return $record;
         }
 
-        return false;
+        return null;
     }
 }

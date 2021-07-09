@@ -16,21 +16,18 @@ use ArrayIterator;
 
 class MemoryReader implements Reader
 {
-    /**
-     * @var Iterator
-     */
-    protected $recordList;
+    protected \Iterator $recordList;
 
     /**
-     * @param mixed $recordList
+     * @param array|\IteratorAggregate|\Iterator $recordList
      */
     public function __construct($recordList)
     {
         if (is_array($recordList)) {
             $this->recordList = new ArrayIterator($recordList);
-        } elseif ($recordList instanceof IteratorAggregate) {
+        } elseif ($recordList instanceof \IteratorAggregate) {
             $this->recordList = $recordList->getIterator();
-        } elseif ($recordList instanceof Iterator) {
+        } elseif ($recordList instanceof \Iterator) {
             $this->recordList = $recordList;
         } else {
             throw new \InvalidArgumentException('Invalid record list. MemoryReader accepts array, IteratorAggregate and Iterator.');
@@ -39,10 +36,7 @@ class MemoryReader implements Reader
         $this->recordList->rewind();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function read()
+    public function read(): ?Record
     {
         if ($this->recordList->valid()) {
             $record = $this->createRecord($this->recordList->current());
@@ -51,15 +45,13 @@ class MemoryReader implements Reader
             return $record;
         }
 
-        return false;
+        return null;
     }
 
     /**
-     * @param mixed $data
-     *
-     * @return Record
+     * @param Record|array $data
      */
-    protected function createRecord($data)
+    protected function createRecord($data): Record
     {
         if ($data instanceof Record) {
             return $data;

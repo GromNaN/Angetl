@@ -18,7 +18,7 @@ use Angetl\Record;
  */
 class MapFilter implements Filter
 {
-    protected $mapping;
+    protected array $mapping;
 
     /**
      * Constructor.
@@ -31,17 +31,20 @@ class MapFilter implements Filter
     /**
      * {@inheritDoc}
      */
-    public function filter(Record $record)
+    public function filter(Record $record): void
     {
         foreach ($this->mapping as $fieldName => $map) {
             if (is_callable($map)) {
                 $record[$fieldName] = $map($record);
                 continue;
             }
-
-            if ((is_numeric($map) || is_string($map)) && isset($record[$map])) {
-                $record[$fieldName] = $record[$map];
+            if (!(is_numeric($map) || is_string($map))) {
+                continue;
             }
+            if (!isset($record[$map])) {
+                continue;
+            }
+            $record[$fieldName] = $record[$map];
         }
     }
 }

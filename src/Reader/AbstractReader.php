@@ -11,40 +11,18 @@ declare(strict_types=1);
 
 namespace Angetl\Reader;
 
-use Angetl\Record;
-
 abstract class AbstractReader implements Reader
 {
-    /**
-     * @var array Fields definition
-     */
-    protected $fields;
+    protected array $fields = [];
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->fields = [];
-    }
-
-    /**
-     * @param string $fieldName Field name
-     * @param mixed $field Field definition
-     *
-     * @return AbstractReader
-     */
-    public function addField($fieldName, $field = null)
+    public function addField(string $fieldName, $field = null): self
     {
         $this->fields[$fieldName] = $field;
 
         return $this;
     }
 
-    /**
-     * @return array Field names
-     */
-    public function getFieldNames()
+    public function getFieldNames(): array
     {
         return array_keys($this->fields);
     }

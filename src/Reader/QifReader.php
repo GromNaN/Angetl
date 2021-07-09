@@ -30,10 +30,7 @@ class QifReader implements Reader
     protected $handle;
 
     /**
-     * Constructor.
-     *
      * @param resource $handle File handle
-     * @param array $options Options
      */
     public function __construct($handle)
     {
@@ -46,13 +43,18 @@ class QifReader implements Reader
     /**
      * {@inheritDoc}
      */
-    public function read()
+    public function read(): ?Record
     {
         if (!feof($this->handle)) {
             $record = new Record();
 
             do {
                 $line = fgets($this->handle);
+
+                if (false === $line) {
+                    continue;
+                }
+
                 $line = rtrim($line, " \r\n");
 
                 if (empty($line)) {
@@ -74,9 +76,9 @@ class QifReader implements Reader
                 $record[$code] = substr($line, strlen($code));
             } while (!feof($this->handle));
 
-            return (0 === count($record->getValues())) ? false : $record;
+            return (0 === count($record->getValues())) ? null : $record;
         }
 
-        return false;
+        return null;
     }
 }

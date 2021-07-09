@@ -16,9 +16,9 @@ class Record implements \ArrayAccess
     public const FLAG_DELETED = 'deleted';
     public const FLAG_INVALID = 'invalid';
 
-    protected $values;
+    protected array $values;
     protected $messages;
-    protected $flags;
+    protected array $flags;
 
     public function __construct($values = null)
     {
@@ -37,12 +37,12 @@ class Record implements \ArrayAccess
         return $this;
     }
 
-    public function getValues()
+    public function getValues(): array
     {
         return $this->values;
     }
 
-    public function offsetExists($key)
+    public function offsetExists($key): bool
     {
         return array_key_exists($key, $this->values);
     }
@@ -52,12 +52,12 @@ class Record implements \ArrayAccess
         return $this->values[$key];
     }
 
-    public function offsetSet($key, $value)
+    public function offsetSet($key, $value): void
     {
         $this->values[$key] = $value;
     }
 
-    public function offsetUnset($key)
+    public function offsetUnset($key): void
     {
         unset($this->values[$key]);
     }
@@ -88,7 +88,7 @@ class Record implements \ArrayAccess
      *
      * @return Record
      */
-    public function addMessage($template, $params = [])
+    public function addMessage($template, $params = []): void
     {
         $this->messages[] = ['template' => $template, 'params' => $params];
     }

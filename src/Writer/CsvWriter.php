@@ -15,11 +15,11 @@ use Angetl\Record;
 
 class CsvWriter implements Writer
 {
-    protected static $defaultOptions = [
+    protected static array $defaultOptions = [
         'delimiter' => ';',
         'enclosure' => '"',
     ];
-    protected $options;
+    protected array $options;
 
     /**
      * @var resource File handle
@@ -29,7 +29,7 @@ class CsvWriter implements Writer
     /**
      * @var array Fields definition like
      */
-    protected $fields;
+    protected array $fields;
 
     public function __construct($handle, array $fields, array $options = [])
     {
@@ -47,7 +47,7 @@ class CsvWriter implements Writer
     /**
      * {@inheritDoc}
      */
-    public function write(Record $record)
+    public function write(Record $record): void
     {
         $fields = [];
         foreach ($this->fields as $fieldName => $sourceFieldName) {
@@ -61,7 +61,7 @@ class CsvWriter implements Writer
         $ret = fputcsv($this->handle, $fields, $this->options['delimiter'], $this->options['enclosure']);
 
         if (false === $ret) {
-            throw new \RuntimeException('Error writing line: %s', implode($this->options['delimiter'], $values));
+            throw new \RuntimeException('Error writing line: %s', implode($this->options['delimiter'], $fields));
         }
     }
 
@@ -77,7 +77,7 @@ class CsvWriter implements Writer
         $ret = fputcsv($this->handle, $headers, $this->options['delimiter'], $this->options['enclosure']);
 
         if (false === $ret) {
-            throw new \RuntimeException('Error writing line: %s', implode($this->options['delimiter'], $values));
+            throw new \RuntimeException('Error writing line: %s', implode($this->options['delimiter'], $headers));
         }
     }
 }

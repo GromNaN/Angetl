@@ -19,8 +19,6 @@ interface Writer
      * Write a record.
      *
      * @param Record $record record to write
-     *
-     * @return void
      */
-    public function write(Record $record);
+    public function write(Record $record): void;
 }

@@ -48,7 +48,7 @@ class ValidationFilter implements Filter
     /**
      * {@inheritDoc}
      */
-    public function filter(Record $record)
+    public function filter(Record $record): void
     {
         $violations = $this->validator->validate($record->getValues(), $this->constraint);
 

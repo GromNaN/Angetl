@@ -18,7 +18,7 @@ class NullWriter implements Writer
     /**
      * {@inheritDoc}
      */
-    public function write(Record $record)
+    public function write(Record $record): void
     {
         // Do nothing.
     }

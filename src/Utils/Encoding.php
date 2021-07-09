@@ -35,7 +35,7 @@ class Encoding
             . ')+%xs', $string);
     }
 
-    public static function toUtf8($string)
+    public static function toUtf8($string): string
     {
         return utf8_encode($string);
     }

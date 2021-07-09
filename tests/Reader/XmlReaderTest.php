@@ -15,8 +15,6 @@ use Angetl\Reader\XmlReader;
 
 class XmlReaderTest extends ReaderTest
 {
-    protected $class = XmlReader::class;
-
     public function testAddField()
     {
         $reader = $this->getReader();
@@ -26,10 +24,7 @@ class XmlReaderTest extends ReaderTest
         $this->assertEquals($fieldNames, $reader->getFieldNames(), 'Get field names');
     }
 
-    /**
-     * @return \Angetl\Reader\XmlReader
-     */
-    protected function getReader()
+    protected function getReader(): XmlReader
     {
         $doc = new \DOMDocument();
         $doc->load(__DIR__.'/Fixtures/bookstore.xml');

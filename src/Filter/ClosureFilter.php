@@ -15,14 +15,14 @@ use Angetl\Record;
 
 class ClosureFilter implements Filter
 {
-    protected $closures;
+    protected array $closures;
 
     public function __construct(array $closures = [])
     {
         $this->closures = $closures;
     }
 
-    public function setClosure($fieldName, $closure)
+    public function setClosure($fieldName, $closure): void
     {
         $this->closures[$fieldName] = $closure;
     }
@@ -30,7 +30,7 @@ class ClosureFilter implements Filter
     /**
      * {@inheritDoc}
      */
-    public function filter(Record $record)
+    public function filter(Record $record): void
     {
         foreach ($this->closures as $fieldName => $closure) {
             $record[$fieldName] = $closure($record[$fieldName]);

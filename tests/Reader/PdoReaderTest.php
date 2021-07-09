@@ -15,12 +15,7 @@ use Angetl\Reader\PdoReader;
 
 class PdoReaderTest extends ReaderTest
 {
-    protected $class = PdoReader::class;
-
-    /**
-     * @return \Angetl\Reader\PdoReader
-     */
-    protected function getReader()
+    protected function getReader(): PdoReader
     {
         $pdo = new \PDO(sprintf('sqlite:%s/Fixtures/bookstore.sqlite', __DIR__));
         $stmt = $pdo->prepare('SELECT * FROM bookstore');

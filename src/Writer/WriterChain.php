@@ -15,7 +15,7 @@ use Angetl\Record;
 
 class WriterChain implements Writer
 {
-    private $writers;
+    private array $writers;
 
     public function __construct(array $writers = [])
     {
@@ -29,9 +29,9 @@ class WriterChain implements Writer
      *
      * @return WriterChain current writer chain
      */
-    public function add(Writer $writer)
+    public function add(Writer $writer): self
     {
-        $this->writer[] = $writer;
+        $this->writers[] = $writer;
 
         return $this;
     }
@@ -39,7 +39,7 @@ class WriterChain implements Writer
     /**
      * {@inheritDoc}
      */
-    public function write(Record $record)
+    public function write(Record $record): void
     {
         foreach ($this->writers as $writer) {
             $writer->write($record);

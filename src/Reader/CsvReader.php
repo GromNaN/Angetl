@@ -22,7 +22,7 @@ use Angetl\Utils\Encoding;
  */
 class CsvReader extends AbstractReader
 {
-    protected static $defaultOptions = [
+    private const DEFAULT_OPTIONS = [
         'skip' => 0, // Number of lines to skip
         'names_first' => true, // The first line contains field names
         'delimiter' => null, // Delimiter. If null, il will be detected
@@ -31,24 +31,22 @@ class CsvReader extends AbstractReader
         'enclosure' => '"', // CSV enclosure
         'delimiters' => [',', ';', "\t", '|'],
     ];
-    protected $handle;
-    protected $firstLine;
+
+    private array $options;
+    private $handle;
+    private bool $firstLine;
 
     /**
-     * Constructor.
-     *
      * @param resource  $handle     File handle given by fopen() or fsockopen()
      * @param array     $options    Reader's options
      */
     public function __construct($handle, array $options = [])
     {
-        parent::__construct();
-
         if (!is_resource($handle)) {
             throw new \InvalidArgumentException('Invalid resource handle');
         }
 
-        $this->options = array_merge(static::$defaultOptions, $options);
+        $this->options = array_merge(self::DEFAULT_OPTIONS, $options);
         $this->handle = $handle;
 
         $this->initialize();
@@ -57,7 +55,7 @@ class CsvReader extends AbstractReader
     /**
      * {@inheritDoc}
      */
-    public function read()
+    public function read(): ?Record
     {
         if ($line = fgets($this->handle, $this->options['length'])) {
             if (null === $delimiter = $this->options['delimiter']) {
@@ -79,7 +77,7 @@ class CsvReader extends AbstractReader
             $record = new Record();
             foreach ($this->fields as $fieldName => $key) {
                 if (!array_key_exists($key, $values)) {
-                    throw new \RuntimeException(sprintf('Invalid file format. Column "%s" missing in line "%"', $key, $line));
+                    throw new \RuntimeException(sprintf('Invalid file format. Column "%s" missing in line "%d"', $key, $line));
                 }
                 $record[$fieldName] = $values[$key];
             }
@@ -87,10 +85,10 @@ class CsvReader extends AbstractReader
             return $record;
         }
 
-        return false;
+        return null;
     }
 
-    protected function initialize()
+    protected function initialize(): void
     {
         $this->firstLine = (bool) $this->options['names_first'];
         $this->skipLines($this->handle, $this->options['skip']);
@@ -100,9 +98,8 @@ class CsvReader extends AbstractReader
      * Move the cursor by the number of lines to skip
      *
      * @param resource $handle
-     * @param int $skip
      */
-    protected function skipLines($handle, $skip)
+    protected function skipLines($handle, int $skip): void
     {
         while ($skip > 0 && !feof($handle)) {
             --$skip;
@@ -111,17 +108,14 @@ class CsvReader extends AbstractReader
     }
 
     /**
-     * Detect the best delimitor for the given line.
-     *
-     * @param string $line
+     * Detect the best delimiter for the given line.
      *
      * @throws \RuntimeException if the delimiter cannot be detected correctly
-     *
-     * @return string
      */
-    protected function detectDelimiter($line, $delimiters)
+    protected function detectDelimiter(string $line, $delimiters): string
     {
         $delimiterCount = -1;
+        $delimiter = '';
 
         foreach ($delimiters as $d) {
             if ($delimiterCount < $c = substr_count($line, $d)) {

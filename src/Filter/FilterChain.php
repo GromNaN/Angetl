@@ -15,7 +15,7 @@ use Angetl\Record;
 
 class FilterChain implements Filter
 {
-    private $filters;
+    private array $filters;
 
     public function __construct(array $filters = [])
     {
@@ -39,7 +39,7 @@ class FilterChain implements Filter
     /**
      * {@inheritDoc}
      */
-    public function filter(Record $record)
+    public function filter(Record $record): void
     {
         foreach ($this->filters as $filter) {
             $filter->filter($record);
