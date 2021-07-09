@@ -117,5 +117,4 @@ class Processor implements \Iterator
         $this->key = 0;
         $this->next();
     }
-
 }

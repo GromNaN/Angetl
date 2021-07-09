@@ -13,8 +13,7 @@ use Angetl\Utils\Encoding;
  */
 class CsvReader extends AbstractReader
 {
-
-    static protected $defaultOptions = array(
+    protected static $defaultOptions = array(
         'skip' => 0, // Number of lines to skip
         'names_first' => true, // The first line contains field names
         'delimiter' => null, // Delimiter. If null, il will be detected
@@ -127,6 +126,4 @@ class CsvReader extends AbstractReader
 
         return $delimiter;
     }
-
 }
-

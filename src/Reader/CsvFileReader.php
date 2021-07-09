@@ -25,5 +25,4 @@ class CsvFileReader extends CsvReader
 
         parent::__construct($handle, $options);
     }
-
 }

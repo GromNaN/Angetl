@@ -6,7 +6,6 @@ use Angetl\Record;
 
 class XmlReader extends AbstractReader
 {
-
     protected $recordXpath = '//';
     protected $nodes;
     protected $currentNodeId = 0;
@@ -54,5 +53,4 @@ class XmlReader extends AbstractReader
 
         return false;
     }
-
 }

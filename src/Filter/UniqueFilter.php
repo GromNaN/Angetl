@@ -56,5 +56,4 @@ class UniqueFilter
 
         return sha1(json_encode($values), true);
     }
-
 }

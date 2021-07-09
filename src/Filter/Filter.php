@@ -9,5 +9,5 @@ interface Filter
     /**
      * @param Record $record
      */
-    function filter(Record $record);
+    public function filter(Record $record);
 }

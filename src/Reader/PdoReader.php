@@ -47,5 +47,4 @@ class PdoReader extends AbstractReader
 
         return false;
     }
-
 }

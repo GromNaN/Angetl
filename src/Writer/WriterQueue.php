@@ -70,6 +70,4 @@ class WriterQueue implements Writer
 
         return $this;
     }
-
 }
-

@@ -108,5 +108,4 @@ class Record implements \ArrayAccess
     {
         return array_key_exists($name, $this->flags) ? $this->flags[$name] : $default;
     }
-
 }

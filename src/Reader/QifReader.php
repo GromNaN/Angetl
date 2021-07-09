@@ -40,11 +40,9 @@ class QifReader implements Reader
     public function read()
     {
         if (!feof($this->handle)) {
-
             $record = new Record();
 
             do {
-
                 $line = fgets($this->handle);
                 $line = rtrim($line, " \r\n");
 
@@ -65,7 +63,6 @@ class QifReader implements Reader
                 }
 
                 $record[$code] = substr($line, strlen($code));
-
             } while (!feof($this->handle));
 
             return (0 === count($record->getValues())) ? false : $record;

@@ -76,5 +76,4 @@ class ValidationFilterTest extends TestCase
 
         return $filter;
     }
-
 }

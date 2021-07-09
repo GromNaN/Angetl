@@ -9,7 +9,6 @@ use Angetl\Record;
  */
 class ClosureFilter implements Filter
 {
-
     protected $closures;
 
     public function __construct(array $closures = array())
@@ -31,5 +30,4 @@ class ClosureFilter implements Filter
             $record[$fieldName] = $closure($record[$fieldName]);
         }
     }
-
 }

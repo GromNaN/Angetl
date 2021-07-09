@@ -6,8 +6,7 @@ use Angetl\Record;
 
 class CsvWriter implements Writer
 {
-
-    static protected $defaultOptions = array(
+    protected static $defaultOptions = array(
         'delimiter' => ';',
         'enclosure' => '"',
     );
@@ -72,5 +71,4 @@ class CsvWriter implements Writer
             throw new \RuntimeException('Error writing line: %s', implode($this->options['delimiter'], $values));
         }
     }
-
 }

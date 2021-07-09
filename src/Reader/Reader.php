@@ -11,5 +11,5 @@ interface Reader
      *
      * return Record|bool The record read. false is returned at the end.
      */
-    function read();
+    public function read();
 }

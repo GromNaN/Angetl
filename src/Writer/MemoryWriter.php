@@ -37,5 +37,4 @@ class MemoryWriter implements Writer
     {
         return $this->recordList;
     }
-
 }

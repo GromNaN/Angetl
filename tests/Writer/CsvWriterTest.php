@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class CsvWriterTest extends TestCase
 {
-
     public function testWriteHeader()
     {
         $handle = fopen('php://temp', 'w+');

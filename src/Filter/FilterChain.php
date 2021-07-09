@@ -36,4 +36,3 @@ class FilterChain implements Filter
         }
     }
 }
-

@@ -17,5 +17,4 @@ class RssReader extends XmlReader
             ->addField('guid', 'string(guid/text())')
         ;
     }
-
 }

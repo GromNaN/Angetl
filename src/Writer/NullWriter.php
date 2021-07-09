@@ -14,6 +14,4 @@ class NullWriter implements Writer
     {
         // Do nothing.
     }
-
 }
-
