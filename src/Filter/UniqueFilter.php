@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of gromnan/angetl.
+ * (c) Jérôme Tamarelle <https://github.com/GromNaN>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Angetl\Filter;
 
 use Angetl\Record;
@@ -13,13 +22,12 @@ use Angetl\Record;
  */
 class UniqueFilter
 {
-
     /**
-     * @var array Hashed footprint of records already filtered.
+     * @var array hashed footprint of records already filtered
      */
     private $hashes;
     /**
-     * @var array List of field names to check unicity.
+     * @var array list of field names to check unicity
      */
     protected $uniqueFieldNames;
 
@@ -28,16 +36,13 @@ class UniqueFilter
         $this->uniqueFieldNames = $uniqueFieldNames ? array_flip($uniqueFieldNames) : false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function filter(Record $record)
     {
         $hash = $this->getHash($record->getValues());
 
         if ($key = array_search($hash, $this->hashes)) {
             $record->setFlag(Record::FLAG_DELETED);
-            $record->addMessage('Duplicate of {{ key }}', array('{{ key }}' => $key));
+            $record->addMessage('Duplicate of {{ key }}', ['{{ key }}' => $key]);
         }
 
         $this->hashes[] = $hash;

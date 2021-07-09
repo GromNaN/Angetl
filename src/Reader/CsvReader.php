@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of gromnan/angetl.
+ * (c) Jérôme Tamarelle <https://github.com/GromNaN>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Angetl\Reader;
 
 use Angetl\Record;
@@ -13,15 +22,15 @@ use Angetl\Utils\Encoding;
  */
 class CsvReader extends AbstractReader
 {
-    protected static $defaultOptions = array(
+    protected static $defaultOptions = [
         'skip' => 0, // Number of lines to skip
         'names_first' => true, // The first line contains field names
         'delimiter' => null, // Delimiter. If null, il will be detected
         'encoding' => null, // Encoding. If null, il will be detected
         'length' => 4096, // Max line length
         'enclosure' => '"', // CSV enclosure
-        'delimiters' => array(',', ';', "\t", '|'),
-    );
+        'delimiters' => [',', ';', "\t", '|'],
+    ];
     protected $handle;
     protected $firstLine;
 
@@ -31,7 +40,7 @@ class CsvReader extends AbstractReader
      * @param resource  $handle     File handle given by fopen() or fsockopen()
      * @param array     $options    Reader's options
      */
-    public function __construct($handle, array $options = array())
+    public function __construct($handle, array $options = [])
     {
         parent::__construct();
 
@@ -96,7 +105,7 @@ class CsvReader extends AbstractReader
     protected function skipLines($handle, $skip)
     {
         while ($skip > 0 && !feof($handle)) {
-            $skip--;
+            --$skip;
             fgets($handle);
         }
     }
@@ -105,8 +114,10 @@ class CsvReader extends AbstractReader
      * Detect the best delimitor for the given line.
      *
      * @param string $line
+     *
+     * @throws \RuntimeException if the delimiter cannot be detected correctly
+     *
      * @return string
-     * @throws \RuntimeException If the delimiter cannot be detected correctly.
      */
     protected function detectDelimiter($line, $delimiters)
     {

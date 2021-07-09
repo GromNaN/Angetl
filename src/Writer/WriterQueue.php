@@ -1,13 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of gromnan/angetl.
+ * (c) Jérôme Tamarelle <https://github.com/GromNaN>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Angetl\Writer;
 
-use SplQueue;
 use Angetl\Record;
+use SplQueue;
 
 class WriterQueue implements Writer
 {
-
     /**
      * @var Writer
      */
@@ -24,8 +32,6 @@ class WriterQueue implements Writer
     }
 
     /**
-     * @param Writer $writer
-     *
      * @return WriterQueue
      */
     public function setWriter(Writer $writer)
@@ -46,7 +52,8 @@ class WriterQueue implements Writer
     /**
      * Write all queued records.
      *
-     * @param int $max Number of records to write.
+     * @param int $max number of records to write
+     *
      * @return WriterQueue
      */
     public function flush($max = -1)

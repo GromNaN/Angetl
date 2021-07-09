@@ -1,21 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of gromnan/angetl.
+ * (c) Jérôme Tamarelle <https://github.com/GromNaN>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Angetl;
 
-use Angetl\Reader\Reader;
 use Angetl\Filter\Filter;
-use Angetl\Writer\Writer;
+use Angetl\Reader\Reader;
 use Angetl\Record;
+use Angetl\Writer\Writer;
 
 class Processor implements \Iterator
 {
-
     /**
      * @var int Incremental key
      */
     private $key;
     /**
-     * @var Record Last processed record.
+     * @var Record last processed record
      */
     private $currentRecord;
     /**
@@ -32,7 +40,6 @@ class Processor implements \Iterator
     private $filter;
 
     /**
-     * @param Reader $reader
      * @return Processor
      */
     public function setReader(Reader $reader)
@@ -43,7 +50,6 @@ class Processor implements \Iterator
     }
 
     /**
-     * @param Filter $filter
      * @return Processor
      */
     public function setFilter(Filter $filter)
@@ -54,7 +60,6 @@ class Processor implements \Iterator
     }
 
     /**
-     * @param Writer $writer
      * @return Processor
      */
     public function setWriter(Writer $writer)
@@ -66,6 +71,7 @@ class Processor implements \Iterator
 
     /**
      * @return Record
+     *
      * @see \Iterator::current()
      */
     public function current()
@@ -75,6 +81,7 @@ class Processor implements \Iterator
 
     /**
      * @return int
+     *
      * @see \Iterator::key()
      */
     public function key()
@@ -84,12 +91,13 @@ class Processor implements \Iterator
 
     /**
      * @return void
+     *
      * @see \Iterator::next()
      */
     public function next()
     {
         if ($record = $this->reader->read()) {
-            $this->key++;
+            ++$this->key;
             $this->currentRecord = $record;
             if ($this->filter) {
                 $this->filter->filter($record);

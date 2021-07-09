@@ -1,9 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of gromnan/angetl.
+ * (c) Jérôme Tamarelle <https://github.com/GromNaN>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Angetl\Tests\Writer;
 
-use Angetl\Writer\CsvWriter;
 use Angetl\Record;
+use Angetl\Writer\CsvWriter;
 use PHPUnit\Framework\TestCase;
 
 class CsvWriterTest extends TestCase
@@ -13,11 +22,11 @@ class CsvWriterTest extends TestCase
         $handle = fopen('php://temp', 'w+');
         $writer = new CsvWriter(
             $handle,
-            array(
+            [
                 'title' => 'T',
                 'language' => 'L',
                 'price' => 'P',
-            )
+            ]
         );
 
         $writer->writeHeader();
@@ -33,20 +42,20 @@ class CsvWriterTest extends TestCase
         $handle = fopen('php://temp', 'w+');
         $writer = new CsvWriter(
             $handle,
-            array(
+            [
                 'title' => 'title',
                 'language' => 'language',
                 'price' => 'price',
-            ),
-            array(
-                'delimiter' => ':'
-            )
+            ],
+            [
+                'delimiter' => ':',
+            ]
         );
 
-        $record = new Record(array(
+        $record = new Record([
             'title' => 'Harry Potter',
             'price' => 29.99,
-        ));
+        ]);
 
         $writer->write($record);
 

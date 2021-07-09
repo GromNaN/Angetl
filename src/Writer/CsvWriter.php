@@ -1,15 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of gromnan/angetl.
+ * (c) Jérôme Tamarelle <https://github.com/GromNaN>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Angetl\Writer;
 
 use Angetl\Record;
 
 class CsvWriter implements Writer
 {
-    protected static $defaultOptions = array(
+    protected static $defaultOptions = [
         'delimiter' => ';',
         'enclosure' => '"',
-    );
+    ];
     protected $options;
 
     /**
@@ -22,7 +31,7 @@ class CsvWriter implements Writer
      */
     protected $fields;
 
-    public function __construct($handle, array $fields, array $options = array())
+    public function __construct($handle, array $fields, array $options = [])
     {
         if (!is_resource($handle)) {
             throw new \InvalidArgumentException('CsvWriter::__construct() expects parameter 1 to be resource, %s given', $handle);
@@ -40,7 +49,7 @@ class CsvWriter implements Writer
      */
     public function write(Record $record)
     {
-        $fields = array();
+        $fields = [];
         foreach ($this->fields as $fieldName => $sourceFieldName) {
             if (isset($record[$sourceFieldName])) {
                 $fields[$fieldName] = strval($record[$sourceFieldName]);

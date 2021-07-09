@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of gromnan/angetl.
+ * (c) Jérôme Tamarelle <https://github.com/GromNaN>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Angetl\Utils;
 
 class Encoding
@@ -7,10 +16,11 @@ class Encoding
     /**
      * Detect if the string is encoded in UTF-8.
      *
-     * @param string $string The tested string.
-     * @access public
-     * @return boolean True if the string is in UTF-8, false otherwhise.
-     * @link http://www.php.net/manual/en/function.mb-detect-encoding.php#68607
+     * @param string $string the tested string
+     *
+     * @return bool true if the string is in UTF-8, false otherwhise
+     *
+     * @see http://www.php.net/manual/en/function.mb-detect-encoding.php#68607
      */
     public static function isUtf8($string)
     {

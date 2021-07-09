@@ -1,11 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of gromnan/angetl.
+ * (c) Jérôme Tamarelle <https://github.com/GromNaN>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Angetl;
 
 class Record implements \ArrayAccess
 {
-    const FLAG_DELETED = 'deleted';
-    const FLAG_INVALID = 'invalid';
+    public const FLAG_DELETED = 'deleted';
+    public const FLAG_INVALID = 'invalid';
 
     protected $values;
     protected $messages;
@@ -13,9 +22,9 @@ class Record implements \ArrayAccess
 
     public function __construct($values = null)
     {
-        $this->values = array();
-        $this->flags = array();
-        $this->messages = array();
+        $this->values = [];
+        $this->flags = [];
+        $this->messages = [];
         if ($values) {
             $this->setValues($values);
         }
@@ -76,11 +85,12 @@ class Record implements \ArrayAccess
     /**
      * @param string $message Message template
      * @param array  $params  Message parameters
+     *
      * @return Record
      */
-    public function addMessage($template, $params = array())
+    public function addMessage($template, $params = [])
     {
-        $this->messages[] = array('template' => $template, 'params' => $params);
+        $this->messages[] = ['template' => $template, 'params' => $params];
     }
 
     /**
@@ -88,6 +98,7 @@ class Record implements \ArrayAccess
      *
      * @param string $name Flag name
      * @param mixed $value Flag value
+     *
      * @return Record
      */
     public function flag($name, $value = true)
@@ -102,6 +113,7 @@ class Record implements \ArrayAccess
      *
      * @param string $name Flag name
      * @param mixed $default Flag value by default if not set
+     *
      * @return mixed Flag value
      */
     public function is($name, $default = false)
