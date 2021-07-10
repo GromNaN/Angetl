@@ -36,8 +36,8 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "phpstan": "tools/phpstan/vendor/bin/phpstan",
-        "phpcs": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run",
-        "phpcs-fix": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix",
+        "php-cs": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run",
+        "php-cs-fix": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix",
         "rector": "tools/phpstan/vendor/bin/rector process"
     }
 }

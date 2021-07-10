@@ -1,0 +1,35 @@
+name: lint
+
+on: [push, pull_request]
+
+jobs:
+    php-cs-fixer:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: setup php
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 8.0
+                  extensions: mbstring
+            - name: install dependencies
+              run: |
+                  composer install
+                  composer --working-dir=tools/php-cs-fixer install
+            - run: composer run php-cs
+
+    phpstan:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: setup php
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 8.0
+                  extensions: mbstring
+                  coverage: xdebug
+            - name: install dependencies
+              run: |
+                  composer install
+                  composer --working-dir=tools/phpstan install
+            - run: composer run phpstan
