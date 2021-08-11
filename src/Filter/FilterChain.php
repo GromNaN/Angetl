@@ -22,14 +22,7 @@ class FilterChain implements Filter
         $this->filters = $filters;
     }
 
-    /**
-     * Add a filter to the chain.
-     *
-     * @param Filter $filter Filter to add
-     *
-     * @return FilterChain current filter chain
-     */
-    public function add(Filter $filter)
+    public function add(Filter $filter): self
     {
         $this->filters[] = $filter;
 
@@ -42,6 +35,10 @@ class FilterChain implements Filter
     public function filter(Record $record): void
     {
         foreach ($this->filters as $filter) {
+            if (false !== $record->is(Record::FLAG_DELETED) || false !== $record->is(Record::FLAG_INVALID)) {
+                return;
+            }
+
             $filter->filter($record);
         }
     }
